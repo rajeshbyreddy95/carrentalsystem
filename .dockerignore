@@ -1,0 +1,47 @@
+# Maven
+target/
+.m2/
+*.jar
+*.jar.asc
+*.zip
+*.tar.gz
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+*.iml
+.classpath
+.project
+.settings/
+
+# Git
+.git/
+.gitignore
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Build artifacts
+*.class
+*.pyc
+*.pyo
+__pycache__/
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test
+src/test/
+.coverage/
+
+# Logs
+logs/
+*.log

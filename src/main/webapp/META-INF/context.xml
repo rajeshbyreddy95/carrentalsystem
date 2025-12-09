@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Tomcat Context Configuration for multipart uploads -->
+<!-- Place in: src/main/webapp/META-INF/context.xml -->
+<Context sessionCookieSecure="true" useHttpOnly="true" sessionCookieSameSite="Lax">
+    <!-- This context file is automatically picked up by embedded Tomcat -->
+</Context>
