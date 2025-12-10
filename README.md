@@ -1,40 +1,53 @@
-# DriveHub - Car Rental System
-## Production-Ready Spring Boot + JSP Application
+# 🚗 DriveHub - Car Rental System
 
-### 🚀 Quick Start
+A full-stack car rental platform built with **Spring Boot** and **JSP**, featuring user authentication, OTP verification, booking management, payment integration with Razorpay, and cloud deployment on AWS.
 
-```bash
-# 1. Navigate to project directory
-cd /Users/rajeshbyreddy/springboot/carrentalsystem
-
-# 2. Build the project
-mvn clean package -DskipTests
-
-# 3. Run the application
-./mvnw spring-boot:run
-
-# 4. Open in browser
-# Home:     http://localhost:8080/
-# Login:    http://localhost:8080/login
-# Register: http://localhost:8080/register
-# Profile:  http://localhost:8080/profile
-```
+**🌐 Live Demo**: [http://ec2-98-92-39-200.compute-1.amazonaws.com:8080/](http://ec2-98-92-39-200.compute-1.amazonaws.com:8080/)
 
 ---
 
-## 📋 Project Overview
+## 🌟 Project Overview
 
-**DriveHub** is a comprehensive car rental platform built with Spring Boot 4.0.0 and JSP templates. It features a beautiful, modern UI with role-based user dashboards (User vs Admin), complete registration flow with OTP verification, and a responsive design optimized for all devices.
+**DriveHub** is a production-ready car rental application that allows users to:
+- Browse and search available cars
+- Register with email OTP verification  
+- Book cars with date selection
+- Make payments through Razorpay
+- Manage bookings and profile
+- Admin dashboard for car and booking management
 
-### Key Statistics
-- **4 JSP Pages** (1500+ lines combined)
-- **Beautiful Design** with Playfair Display & Sora fonts
-- **1900+ Font Awesome Icons** integrated
-- **Tailwind CSS** responsive framework
-- **Dark Mode** support with localStorage persistence
-- **100% Mobile Responsive** design
-- **Role-Based Dashboards** (User & Admin)
-- **Zero External APIs** required to test frontend
+The application uses **AWS RDS** for database, **Redis (Upstash)** for caching, **AWS S3** for image storage, and is deployed on **AWS EC2**.
+
+---
+
+## 🛠️ Technology Stack
+
+### Backend
+- **Java 17**
+- **Spring Boot 3.2.2** (WAR packaging)
+- **Spring MVC** with JSP views
+- **Spring Data JPA** with Hibernate
+- **Spring Security** (for password encryption)
+- **Spring Mail** (Gmail SMTP for OTP)
+
+### Frontend
+- **JSP (JavaServer Pages)**
+- **Tailwind CSS** - Responsive design
+- **Font Awesome** - Icons
+- **JavaScript** - Client-side interactions
+
+### Database & Cache
+- **MySQL 8.0** - AWS RDS
+- **Redis** - Upstash (for caching)
+
+### Cloud Services
+- **AWS EC2** - Application hosting
+- **AWS RDS** - MySQL database
+- **AWS S3** - Car image storage
+- **Upstash Redis** - Cache layer
+
+### Payment Gateway
+- **Razorpay** - Payment processing
 
 ---
 
@@ -42,475 +55,398 @@ mvn clean package -DskipTests
 
 ```
 carrentalsystem/
-├── src/
-│   ├── main/
-│   │   ├── java/com/project/carrentalsystem/
-│   │   │   ├── CarrentalsystemApplication.java
-│   │   │   ├── controller/
-│   │   │   │   └── UserController.java
-│   │   │   ├── service/
-│   │   │   │   ├── UserService.java
-│   │   │   │   ├── EmailService.java
-│   │   │   │   └── OciStorageService.java
-│   │   │   ├── model/
-│   │   │   │   ├── User.java
-│   │   │   │   └── OtpVerification.java
-│   │   │   ├── dto/
-│   │   │   │   └── UserRegistration.java
-│   │   │   └── repository/
-│   │   │       ├── UserRepository.java
-│   │   │       └── OtpRepository.java
-│   │   ├── resources/
-│   │   │   └── application.properties
-│   │   └── webapp/WEB-INF/jsp/
-│   │       ├── home.jsp              ⭐ 1500+ lines
-│   │       ├── login.jsp             ⭐ 200+ lines
-│   │       ├── register.jsp          ⭐ 450+ lines
-│   │       └── profile.jsp           ⭐ 900+ lines (NEW)
-│   └── test/
-│       └── CarrentalsystemApplicationTests.java
+├── src/main/
+│   ├── java/com/project/carrentalsystem/
+│   │   ├── CarrentalsystemApplication.java
+│   │   ├── controller/
+│   │   │   ├── UserController.java
+│   │   │   ├── AdminController.java
+│   │   │   └── BookingController.java
+│   │   ├── service/
+│   │   │   ├── UserService.java
+│   │   │   ├── CarService.java
+│   │   │   ├── BookingService.java
+│   │   │   ├── EmailService.java
+│   │   │   └── S3StorageService.java
+│   │   ├── repository/
+│   │   │   ├── UserRepository.java
+│   │   │   ├── CarRepository.java
+│   │   │   ├── BookingRepository.java
+│   │   │   └── OtpRepository.java
+│   │   ├── model/
+│   │   │   ├── User.java
+│   │   │   ├── Car.java
+│   │   │   ├── Booking.java
+│   │   │   └── OtpVerification.java
+│   │   ├── config/
+│   │   │   ├── WebConfig.java
+│   │   │   ├── RedisConfig.java
+│   │   │   ├── RazorpayConfig.java
+│   │   │   └── CacheStatistics.java
+│   │   └── dto/
+│   │       ├── UserRegistration.java
+│   │       └── UserResponse.java
+│   └── resources/
+│       ├── application.properties
+│       └── META-INF/resources/WEB-INF/jsp/
+│           ├── home.jsp
+│           ├── login.jsp
+│           ├── register.jsp
+│           ├── profile.jsp
+│           ├── cars.jsp
+│           ├── booking.jsp
+│           └── admin-dashboard.jsp
 ├── pom.xml
-├── application.properties
-├── mvnw / mvnw.cmd
-└── README.md (this file)
-
-📚 DOCUMENTATION FILES:
-├── PROJECT_SUMMARY.md              - Complete project overview
-├── PROFILE_PAGE_DOCUMENTATION.md   - Profile page features
-├── PROFILE_TESTING_GUIDE.md        - How to test profiles
-├── USER_FLOW_GUIDE.md              - Complete user journey
-├── JSP_HOMEPAGE_DOCUMENTATION.md   - Homepage guide
-├── QUICK_START_GUIDE.md            - 5-minute setup
-└── IMPLEMENTATION_EXAMPLES.md      - Backend code templates
+├── Dockerfile
+├── docker-compose.yml
+└── README.md
 ```
 
 ---
 
-## 🎨 UI/UX Features
+## ✨ Key Features
 
-### Design System
-- **Color Palette**: Blue gradient (#2563eb → #1e40af) primary
-- **Secondary Colors**: Green, Purple, Orange for accent
-- **Typography**: 
-  - Playfair Display (headings) - Beautiful serif font
-  - Sora (body) - Clean, modern sans-serif
-  - Poppins (fallback) - Complete coverage
-- **Icons**: Font Awesome 6.4.0 (1900+ icons)
-- **Framework**: Tailwind CSS via CDN
+### User Features
+- 🔐 **User Registration** with email OTP verification
+- 🔑 **Login/Logout** with session management
+- 🚗 **Browse Cars** with search and filter
+- 📅 **Book Cars** with date selection
+- 💳 **Payment Integration** via Razorpay
+- 👤 **User Profile** with booking history
+- 📧 **Email Notifications** for bookings and OTPs
 
-### Pages Created
+### Admin Features
+- 📊 **Admin Dashboard** with statistics
+- ➕ **Add/Edit/Delete Cars** with image upload to S3
+- 📋 **Manage Bookings** - view all bookings
+- 👥 **User Management**
+- 📈 **Analytics** - total bookings, revenue, etc.
 
-#### 1. **Home Page** (`/`)
-```
-✅ Hero Section (96vh height)
-✅ Floating animations & gradient backgrounds
-✅ Quick booking form with date pickers
-✅ Featured cars grid (dynamic with JSP loops)
-✅ Why Choose Us (4-card section)
-✅ How It Works (4-step timeline with icons)
-✅ Customer testimonials
-✅ Multi-city locations
-✅ Comprehensive footer
-✅ Dark mode support
-✅ Mobile responsive navigation
-```
+### Technical Features
+- ⚡ **Redis Caching** for improved performance
+- 🔒 **Secure Password Storage** with BCrypt
+- 📱 **Responsive Design** - works on all devices
+- 🎨 **Modern UI** with Tailwind CSS
+- 🌐 **RESTful APIs** for frontend-backend communication
+- 🚀 **Cloud Deployment** on AWS EC2
 
-#### 2. **Login Page** (`/login`)
-```
-✅ Centered form layout
-✅ Email & password fields with icons
-✅ Remember me checkbox
-✅ Forgot password link
-✅ Social login buttons (Google, Apple)
-✅ Sign up redirect
-✅ Form validation
-✅ Dark mode support
-```
+---
 
-#### 3. **Registration Page** (`/register`)
-```
-✅ 3-step registration process
-  - Step 1: Basic info (name, email, phone, password)
-  - Step 2: Document info (PAN, Aadhaar)
-  - Step 3: File uploads (Driving License, Aadhaar)
-✅ Form validation with regex patterns
-✅ Drag-and-drop file upload UI
-✅ OTP verification modal
-✅ Loading indicators on submission
-✅ Toast notifications (success/error)
-✅ Auto-redirect to profile on success
-✅ Dark mode support
+## 🚀 Quick Start
+
+### Prerequisites
+- Java 17 or higher
+- Maven 3.6+
+- MySQL 8.0
+- AWS Account (for RDS, S3, EC2)
+- Redis (Upstash account)
+- Razorpay Account
+
+### Local Development
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/rajeshbyreddy95/carrentalsystem.git
+cd carrentalsystem
 ```
 
-#### 4. **Profile Page** (`/profile`) - NEW ⭐
+2. **Configure application.properties**
+```properties
+# Database
+spring.datasource.url=jdbc:mysql://localhost:3306/carrentalsystem
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+
+# Email (Gmail)
+spring.mail.username=your_email@gmail.com
+spring.mail.password=your_app_password
+
+# Redis
+spring.data.redis.url=rediss://your-redis-url
+
+# AWS S3
+aws.s3.access-key=your_access_key
+aws.s3.secret-key=your_secret_key
+aws.s3.bucket-name=your_bucket_name
+
+# Razorpay
+razorpay.key-id=your_razorpay_key
+razorpay.key-secret=your_razorpay_secret
 ```
-✅ Role-based display (User vs Admin)
-✅ Beautiful profile header with avatar
-✅ Quick stats cards
-✅ Tab navigation system
 
-🧑 USER PROFILE:
-├─ My Bookings Tab
-│  ├─ Booking cards with car details
-│  ├─ Booking status (Active/Completed/Cancelled)
-│  ├─ New Booking button
-│  └─ Empty state handling
-├─ Wallet Tab
-│  ├─ Balance display with gradient
-│  ├─ Add Money & Withdraw buttons
-│  └─ Transaction history
-└─ Account Details Tab
-   ├─ Personal info card
-   ├─ Document verification status
-   ├─ Security options
-   └─ Notification preferences
+3. **Build and run**
+```bash
+./mvnw clean package -DskipTests
+java -jar target/carrentalsystem-0.0.1-SNAPSHOT.war
+```
 
-👮 ADMIN PROFILE:
-├─ Dashboard Tab (KPI cards)
-├─ Users Tab (user management table)
-├─ Vehicles Tab (vehicle cards grid)
-├─ Bookings Tab (all bookings table)
-└─ Reports Tab (chart placeholders)
+4. **Access the application**
+```
+http://localhost:8080/
 ```
 
 ---
 
-## 🔌 Backend Routes
+## 🌐 Deployment on AWS EC2
 
-### View Routes (Serve JSP)
-```
-GET  /              → home.jsp
-GET  /login         → login.jsp
-GET  /register      → register.jsp
-GET  /profile       → profile.jsp
+### Build for Production
+```bash
+./mvnw clean package -DskipTests
 ```
 
-### API Routes (REST Endpoints)
+### Deploy to EC2
+```bash
+scp -i your-key.pem target/carrentalsystem-0.0.1-SNAPSHOT.war ubuntu@your-ec2-ip:/home/ubuntu/
 ```
-POST /api/user/register         → Send OTP
-POST /api/user/verify-otp       → Verify OTP & Register
-POST /api/user/login            → Authenticate user
+
+### Run on EC2
+```bash
+ssh -i your-key.pem ubuntu@your-ec2-ip
+pkill -f carrentalsystem
+java -jar /home/ubuntu/carrentalsystem-0.0.1-SNAPSHOT.war &
 ```
 
 ---
 
-## 💾 Technology Stack
+## 📡 API Endpoints
 
-### Frontend
-- **Templates**: JSP with JSTL
-- **Styling**: Tailwind CSS (CDN)
-- **Icons**: Font Awesome 6.4.0
-- **Fonts**: Google Fonts (Playfair Display, Sora)
-- **JavaScript**: Vanilla ES6+
-- **Data**: localStorage for session management
+### User APIs
+- `POST /api/user/register` - Send OTP for registration
+- `POST /api/user/verify-otp` - Verify OTP and create account
+- `POST /api/user/login` - User login
+- `GET /api/user/details?email={email}` - Get user details
+- `GET /api/user/bookings?email={email}` - Get user bookings
 
-### Backend
-- **Framework**: Spring Boot 4.0.0
-- **Web**: Spring MVC (Controller)
-- **Data**: Spring Data JPA + Hibernate
-- **Database**: MySQL 9.5
-- **Connection Pool**: HikariCP
-- **Embedded Server**: Tomcat 11.0.14
+### Car APIs
+- `GET /api/cars/search` - Search available cars
+- `GET /api/cars` - Get all cars (Admin)
+- `POST /api/cars` - Add new car (Admin)
+- `PUT /api/cars/{id}` - Update car (Admin)
+- `DELETE /api/cars/{id}` - Delete car (Admin)
 
-### Build & Deployment
-- **Build Tool**: Maven 3.9+
-- **Java Version**: Java 17
-- **Port**: 8080
-- **Context Path**: /
+### Booking APIs
+- `POST /api/user/booking/create` - Create new booking
+- `GET /api/bookings` - Get all bookings (Admin)
+
+### Config APIs
+- `GET /api/config/razorpay-key` - Get Razorpay public key
 
 ---
 
-## 🗄️ Database Configuration
+## 🗂️ Database Schema
 
-**File**: `src/main/resources/application.properties`
+### Users Table
+```sql
+CREATE TABLE users (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    phone VARCHAR(20),
+    role VARCHAR(20) DEFAULT 'USER',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+```
+
+### Cars Table
+```sql
+CREATE TABLE cars (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    brand VARCHAR(100) NOT NULL,
+    model VARCHAR(100) NOT NULL,
+    category VARCHAR(50),
+    transmission VARCHAR(20),
+    seats INT,
+    fuel_type VARCHAR(20),
+    price_per_day DECIMAL(10,2),
+    description TEXT,
+    image_url VARCHAR(500),
+    registration_number VARCHAR(50) UNIQUE,
+    year INT,
+    color VARCHAR(50),
+    available BOOLEAN DEFAULT TRUE,
+    location VARCHAR(255),
+    rating DECIMAL(3,2) DEFAULT 0.0,
+    total_bookings INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+```
+
+### Bookings Table
+```sql
+CREATE TABLE bookings (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    car_id BIGINT NOT NULL,
+    pickup_date DATE NOT NULL,
+    return_date DATE NOT NULL,
+    pickup_location VARCHAR(255),
+    dropoff_location VARCHAR(255),
+    total_days INT,
+    total_amount DECIMAL(10,2),
+    payment_id VARCHAR(255),
+    payment_status VARCHAR(50) DEFAULT 'PENDING',
+    booking_status VARCHAR(50) DEFAULT 'CONFIRMED',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (car_id) REFERENCES cars(id)
+);
+```
+
+### OTP Verification Table
+```sql
+CREATE TABLE otp_verification (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(255) NOT NULL,
+    otp VARCHAR(6) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP NOT NULL,
+    verified BOOLEAN DEFAULT FALSE
+);
+```
+
+---
+
+## 🎨 Application Pages
+
+1. **Home Page** - Hero section, featured cars, search form
+2. **Login Page** - User authentication
+3. **Register Page** - Two-step registration with OTP
+4. **Profile Page** - User dashboard with booking history
+5. **Cars Page** - Browse all available cars
+6. **Booking Page** - Car booking with payment
+7. **Admin Dashboard** - Manage cars, bookings, users
+
+---
+
+## 🔧 Configuration
+
+The application is configured through `application.properties`:
 
 ```properties
-# MySQL Connection
-spring.datasource.url=jdbc:mysql://localhost:3306/carrentalsystem
-spring.datasource.username=root
-spring.datasource.password=password
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+# Server
+server.port=8080
 
-# Hibernate/JPA
+# Database
+spring.datasource.url=jdbc:mysql://your-rds-endpoint:3306/carrentalsystem
 spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=false
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
 
-# JSP View Resolution
+# JSP Views
 spring.mvc.view.prefix=/WEB-INF/jsp/
 spring.mvc.view.suffix=.jsp
-server.servlet.jsp.init-parameters.development=true
 
-# Mail Configuration (Gmail SMTP)
+# Redis Cache
+spring.data.redis.url=rediss://your-redis-url
+spring.cache.type=redis
+
+# Email
 spring.mail.host=smtp.gmail.com
 spring.mail.port=587
-spring.mail.username=${MAIL_USERNAME}
-spring.mail.password=${MAIL_PASSWORD}
-spring.mail.properties.mail.smtp.auth=true
-spring.mail.properties.mail.smtp.starttls.enable=true
+
+# File Upload
+spring.servlet.multipart.max-file-size=50MB
+spring.servlet.multipart.max-request-size=50MB
 ```
 
 ---
 
-## 📦 Maven Dependencies
+## 🐛 Troubleshooting
 
-**Key Dependencies** (pom.xml):
+### JSP 404 Error
+**Issue**: Getting 404 when accessing root path `/`  
+**Solution**: 
+1. Ensure packaging is `<packaging>war</packaging>` in pom.xml
+2. Application must extend `SpringBootServletInitializer`
+3. JSP files must be in `src/main/resources/META-INF/resources/WEB-INF/jsp/`
+4. Configure `WebConfig` with `@EnableWebMvc` and `InternalResourceViewResolver`
+
+### Application Shuts Down Immediately
+**Issue**: Application starts but shuts down immediately on EC2  
+**Solution**: Make sure Tomcat is not marked as `<scope>provided</scope>` for standalone WAR execution
+
+### Redis Connection Issues
+**Issue**: Cannot connect to Redis  
+**Solution**: Use `rediss://` (with SSL) for Upstash Redis URLs
+
+---
+
+## 📚 Key Maven Dependencies
+
 ```xml
-<!-- Spring Boot -->
+<!-- Spring Boot Web -->
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-web</artifactId>
-    <version>4.0.0</version>
 </dependency>
 
-<!-- JPA & Database -->
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-data-jpa</artifactId>
-</dependency>
-<dependency>
-    <groupId>com.mysql</groupId>
-    <artifactId>mysql-connector-j</artifactId>
-</dependency>
-
-<!-- JSP Support (Jakarta EE Compatible) -->
+<!-- JSP Support -->
 <dependency>
     <groupId>org.apache.tomcat.embed</groupId>
     <artifactId>tomcat-embed-jasper</artifactId>
-    <scope>provided</scope>
 </dependency>
 <dependency>
     <groupId>jakarta.servlet.jsp.jstl</groupId>
     <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
 </dependency>
+
+<!-- Spring Data JPA -->
 <dependency>
-    <groupId>org.glassfish.web</groupId>
-    <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-jpa</artifactId>
 </dependency>
 
-<!-- Others -->
+<!-- MySQL Driver -->
 <dependency>
-    <groupId>org.projectlombok</groupId>
-    <artifactId>lombok</artifactId>
-    <optional>true</optional>
+    <groupId>com.mysql</groupId>
+    <artifactId>mysql-connector-j</artifactId>
+</dependency>
+
+<!-- Redis -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-redis</artifactId>
+</dependency>
+
+<!-- AWS S3 SDK -->
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>s3</artifactId>
+</dependency>
+
+<!-- Email -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-mail</artifactId>
 </dependency>
 ```
-
----
-
-## 🧪 Testing the Application
-
-### Test User Profile
-1. Open browser DevTools (F12)
-2. Go to Console tab
-3. Execute:
-```javascript
-localStorage.setItem('user', JSON.stringify({
-    id: 1,
-    fullName: 'John Doe',
-    email: 'john@example.com',
-    mobileNumber: '9876543210',
-    role: 'user'
-}));
-```
-4. Visit http://localhost:8080/profile
-
-### Test Admin Profile
-1. Open browser DevTools (F12)
-2. Go to Console tab
-3. Execute:
-```javascript
-localStorage.setItem('user', JSON.stringify({
-    id: 1,
-    fullName: 'Admin User',
-    email: 'admin@drivehub.com',
-    mobileNumber: '9876543210',
-    role: 'ADMIN'
-}));
-```
-4. Visit http://localhost:8080/profile
-
-### Test Dark Mode
-- Click moon icon in navigation
-- Preference saved in localStorage
-- Persists after refresh
-
-### Test Responsive Design
-- Use Chrome DevTools (Cmd+Shift+M)
-- Test on mobile (375px), tablet (768px), desktop (1200px)
-
----
-
-## 🎯 Features Checklist
-
-### Frontend ✅
-- [x] Beautiful, modern UI design
-- [x] Responsive across all devices
-- [x] Dark mode with localStorage persistence
-- [x] Form validation with error messages
-- [x] Loading indicators on form submission
-- [x] Toast notifications (success/error)
-- [x] Modal dialogs (OTP verification)
-- [x] Tab navigation systems
-- [x] Status badges with color coding
-- [x] Icon integration throughout
-- [x] Empty states with helpful messaging
-- [x] Keyboard navigation support
-- [x] Accessibility best practices
-- [x] Smooth animations and transitions
-
-### Backend 🔧
-- [ ] Implement UserService.sendOtp()
-- [ ] Implement UserService.verifyOtpAndRegister()
-- [ ] Implement UserService.login()
-- [ ] Implement EmailService.sendEmail()
-- [ ] Create database tables/schema
-- [ ] Implement booking endpoints
-- [ ] Implement admin management endpoints
-- [ ] Add authentication/authorization
-- [ ] Implement file upload to OCI Storage
-- [ ] Add input validation & error handling
-
-### Additional Pages 📄
-- [ ] Search results page
-- [ ] Booking details page
-- [ ] Payment page
-- [ ] Invoice page
-- [ ] Admin dashboard with charts
-- [ ] User settings page
-
----
-
-## 🚀 Deployment
-
-### Local Development
-```bash
-./mvnw spring-boot:run
-# Application runs on http://localhost:8080/
-```
-
-### Production Build
-```bash
-mvn clean package -DskipTests
-# Creates carrentalsystem-0.0.1-SNAPSHOT.jar in target/
-java -jar target/carrentalsystem-0.0.1-SNAPSHOT.jar
-```
-
-### Docker (Optional)
-```dockerfile
-FROM openjdk:17-slim
-COPY target/carrentalsystem-0.0.1-SNAPSHOT.jar app.jar
-ENTRYPOINT ["java","-jar","app.jar"]
-```
-
----
-
-## 📚 Documentation Files
-
-1. **PROJECT_SUMMARY.md** - Complete project overview
-2. **PROFILE_PAGE_DOCUMENTATION.md** - Profile page detailed guide
-3. **PROFILE_TESTING_GUIDE.md** - Testing instructions for profiles
-4. **USER_FLOW_GUIDE.md** - Complete user journey with diagrams
-5. **JSP_HOMEPAGE_DOCUMENTATION.md** - Homepage features guide
-6. **QUICK_START_GUIDE.md** - 5-minute setup instructions
-7. **IMPLEMENTATION_EXAMPLES.md** - Backend code templates
-
----
-
-## 🐛 Common Issues & Solutions
-
-### Issue: JSP pages show plain HTML
-**Solution**: Make sure `spring.mvc.view.prefix` and `spring.mvc.view.suffix` are set in application.properties
-
-### Issue: Icons not showing
-**Solution**: Check Font Awesome CDN is loading (DevTools → Network tab)
-
-### Issue: Fonts not loading
-**Solution**: Check Google Fonts CDN in Network tab. Verify internet connection.
-
-### Issue: Dark mode not persisting
-**Solution**: Check localStorage in DevTools → Application → Local Storage → http://localhost:8080
-
-### Issue: Port 8080 already in use
-**Solution**: `lsof -ti:8080 | xargs kill -9`
-
-### Issue: Build fails with JSTL errors
-**Solution**: Ensure you have jakarta.servlet.jsp.jstl dependencies (not javax.servlet)
-
----
-
-## 📞 Support & Contact
-
-For issues or questions:
-1. Check the documentation files
-2. Review the PROFILE_TESTING_GUIDE.md
-3. Check browser DevTools console for JavaScript errors
-4. Verify all CDN URLs are loading (Network tab)
-
----
-
-## 📄 License
-
-This project is part of DriveHub Car Rental System.
 
 ---
 
 ## 👨‍💻 Development Team
 
-**Created by**: AI Assistant (GitHub Copilot)  
-**Version**: 1.0  
-**Last Updated**: December 7, 2025  
-**Status**: ✅ Production Ready (Frontend)
+**Developer**: Rajesh Byreddy  
+**GitHub**: [@rajeshbyreddy95](https://github.com/rajeshbyreddy95)  
+**Repository**: [carrentalsystem](https://github.com/rajeshbyreddy95/carrentalsystem)
 
 ---
 
-## 🎓 Learning Resources
+## 📄 License
 
-- **Tailwind CSS**: https://tailwindcss.com/docs
-- **Font Awesome**: https://fontawesome.com/docs
-- **Google Fonts**: https://fonts.google.com/
-- **Spring Boot**: https://spring.io/projects/spring-boot
-- **JSP/JSTL**: https://jakarta.ee/compatibility/
+This project is for educational purposes.
 
 ---
 
-## 🔐 Security Notes
+## 🎉 Acknowledgments
 
-⚠️ **Important**: This is a development version. Before production:
-
-1. Implement proper authentication (Spring Security)
-2. Use HTTPS everywhere
-3. Hash passwords securely (BCrypt)
-4. Validate all user inputs server-side
-5. Implement CSRF protection
-6. Add rate limiting
-7. Use environment variables for secrets
-8. Enable CORS only for trusted domains
-9. Add logging and monitoring
-10. Regular security audits
+- Spring Boot Documentation
+- Tailwind CSS for beautiful styling
+- Font Awesome for icons
+- AWS for cloud infrastructure
+- Razorpay for payment integration
 
 ---
 
-## 📈 Performance Metrics
-
-- Home page load: < 500ms
-- Profile page load: < 200ms (client-side only)
-- Dark mode toggle: Instant
-- Tab switching: Smooth (60fps)
-- Mobile responsiveness: Optimized for all sizes
-
----
-
-## 🎉 What's Next?
-
-1. **Connect Backend APIs** - Implement service methods
-2. **Add Chart Library** - For admin reports
-3. **Implement Authentication** - Spring Security integration
-4. **Add Database Operations** - CRUD endpoints
-5. **Deploy to Production** - Docker or cloud hosting
-
----
-
-**Ready to build? Start with `./mvnw spring-boot:run`** 🚀
-
-For detailed setup, see **QUICK_START_GUIDE.md**
+**Ready to drive?** 🚗💨 Start the engine with `java -jar target/carrentalsystem-0.0.1-SNAPSHOT.war`

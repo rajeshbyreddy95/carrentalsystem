@@ -19,7 +19,7 @@ import java.util.Optional;
 public class CarService {
 
     private final CarRepository carRepository;
-    private final OciStorageService ociStorageService;
+    private final S3StorageService s3StorageService;
 
     // Add new car
     @Transactional
@@ -31,9 +31,9 @@ public class CarService {
                 return "Registration number already exists";
             }
 
-            // Upload car image to OCI
+            // Upload car image to AWS S3
             if (carImage != null && !carImage.isEmpty()) {
-                String imageUrl = ociStorageService.uploadFile(
+                String imageUrl = s3StorageService.uploadFile(
                     carImage, 
                     "cars/" + car.getRegistrationNumber()
                 );
@@ -117,10 +117,10 @@ public class CarService {
             // Update image if new one is provided
             if (carImage != null && !carImage.isEmpty()) {
                 // Delete old image
-                ociStorageService.deleteFile(car.getImageUrl());
+                s3StorageService.deleteFile(car.getImageUrl());
                 
                 // Upload new image
-                String imageUrl = ociStorageService.uploadFile(
+                String imageUrl = s3StorageService.uploadFile(
                     carImage, 
                     "cars/" + car.getRegistrationNumber()
                 );
@@ -147,8 +147,8 @@ public class CarService {
                 return "Car not found";
             }
 
-            // Delete car image from OCI
-            ociStorageService.deleteFile(car.get().getImageUrl());
+            // Delete car image from AWS S3
+            s3StorageService.deleteFile(car.get().getImageUrl());
 
             carRepository.deleteById(id);
             log.info("✅ Car deleted successfully: {} {}", car.get().getBrand(), car.get().getModel());

@@ -2,9 +2,16 @@ package com.project.carrentalsystem;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class CarrentalsystemApplication {
+public class CarrentalsystemApplication extends SpringBootServletInitializer {
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(CarrentalsystemApplication.class);
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(CarrentalsystemApplication.class, args);

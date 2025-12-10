@@ -26,7 +26,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final OtpRepository otpRepository;
     private final EmailService emailService;
-    private final OciStorageService ociStorageService;
+    private final S3StorageService s3StorageService;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     // STEP 1: SEND OTP
@@ -107,15 +107,15 @@ public class UserService {
         String licenseUrl = null;
         String aadhaarUrl = null;
 
-        // Upload files to OCI Storage
+        // Upload files to AWS S3
         try {
             if (dto.getDrivingLicense() != null && !dto.getDrivingLicense().isEmpty()) {
-                licenseUrl = ociStorageService.uploadFile(dto.getDrivingLicense(), "driving_license", savedUser.getId());
+                licenseUrl = s3StorageService.uploadFile(dto.getDrivingLicense(), "driving_license", savedUser.getId());
                 System.out.println("✅ Driving License uploaded: " + licenseUrl);
             }
             
             if (dto.getAadhaarPhoto() != null && !dto.getAadhaarPhoto().isEmpty()) {
-                aadhaarUrl = ociStorageService.uploadFile(dto.getAadhaarPhoto(), "aadhaar_photo", savedUser.getId());
+                aadhaarUrl = s3StorageService.uploadFile(dto.getAadhaarPhoto(), "aadhaar_photo", savedUser.getId());
                 System.out.println("✅ Aadhaar Photo uploaded: " + aadhaarUrl);
             }
         } catch (Exception e) {
